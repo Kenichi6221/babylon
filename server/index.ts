@@ -29,6 +29,7 @@ const server = new ApolloServer({
     return { user };
   },
 });
+
 server.applyMiddleware({ app });
 
 const httpServer = createServer(app);

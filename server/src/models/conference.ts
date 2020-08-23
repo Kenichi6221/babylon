@@ -1,6 +1,11 @@
 import { model, Document, Schema } from 'mongoose';
 import { IUser } from './user';
 
+export enum conferenceState {
+  ACTIVE,
+  INACTIVE,
+}
+
 export interface IConference extends Document {
   id: string;
   title: string;
@@ -8,7 +13,7 @@ export interface IConference extends Document {
   location: string;
   quota: number;
   speakerId: IUser['_id'];
-  state: string;
+  state: conferenceState;
   assistants: string[];
 }
 
@@ -18,7 +23,7 @@ export interface IConferenceInput {
   location: string;
   quota: number;
   speakerId: string;
-  state: string;
+  state: conferenceState;
 }
 
 export interface IAsistantInput {
@@ -47,6 +52,10 @@ const coferenceSchema = new Schema({
   },
   state: {
     type: String,
+    enum: Object.values(conferenceState),
+    get: (enumValue: string) =>
+      conferenceState[enumValue as keyof typeof conferenceState],
+    set: (enumValue: conferenceState) => conferenceState[enumValue],
   },
   quota: {
     type: Number,
@@ -63,5 +72,9 @@ const coferenceSchema = new Schema({
     },
   ],
 });
+
+coferenceSchema.set('toJSON', { getters: true });
+// and/or
+coferenceSchema.set('toObject', { getters: true });
 
 export default model<IConference>('Conference', coferenceSchema);

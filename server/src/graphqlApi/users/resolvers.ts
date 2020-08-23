@@ -16,7 +16,6 @@ const userResolvers = {
       parent: any,
       { input }: { input: IUserInput }
     ): Promise<IUser> => {
-      console.log('before', parent);
       const service = new UserServices();
       return await service.createUser(input);
     },

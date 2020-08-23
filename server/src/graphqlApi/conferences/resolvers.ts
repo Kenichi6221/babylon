@@ -5,6 +5,9 @@ import {
   IMutationResult,
 } from '../../models/conference';
 import { ConferenceServices } from './services';
+import { IContext } from '../graphqlTypes';
+import { SPEAKER, ATTENDANT } from '../authorizations/constants';
+import { hasRole } from '../authorizations/authorizator';
 const conferenceResolvers = {
   Query: {
     getConferenceById: async (
@@ -36,22 +39,28 @@ const conferenceResolvers = {
   Mutation: {
     createConference: async (
       _,
-      { input }: { input: IConferenceInput }
+      { input }: { input: IConferenceInput },
+      context: IContext
     ): Promise<IConference> => {
+      hasRole(context, [SPEAKER]);
       const service = new ConferenceServices();
       return await service.createConference(input);
     },
     updateConference: async (
       _,
-      { id, input }: { id: string; input: IConferenceInput }
+      { id, input }: { id: string; input: IConferenceInput },
+      context: IContext
     ): Promise<IMutationResult> => {
+      hasRole(context, [SPEAKER]);
       const service = new ConferenceServices();
       return await service.updateConference(id, input);
     },
     registerAttendant: async (
       _,
-      { input }: { input: IAsistantInput }
+      { input }: { input: IAsistantInput },
+      context: IContext
     ): Promise<IMutationResult> => {
+      hasRole(context, [ATTENDANT]);
       const service = new ConferenceServices();
       return await service.registerAttendant(input);
     },

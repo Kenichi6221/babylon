@@ -1,3 +1,4 @@
+import { conferenceState } from '../../models/conference';
 import ConferenceModel, {
   IConferenceInput,
   IConference,
@@ -25,7 +26,7 @@ export class ConferenceServices {
     }
 
     const willDisableConference =
-      input.state === 'INACTIVE' && conf.state != input.state;
+      input.state === conferenceState.INACTIVE && conf.state != input.state;
 
     if (willDisableConference && conf.assistants.length > 0) {
       return {
@@ -47,7 +48,7 @@ export class ConferenceServices {
   ): Promise<IMutationResult> {
     const conference = await ConferenceModel.findOne({
       _id: input.conferenceId,
-      state: 'ACTIVE',
+      state: conferenceState.ACTIVE,
     }).exec();
 
     if (!conference) {
@@ -71,14 +72,15 @@ export class ConferenceServices {
   public async getAllConferencesBySpeakerId(
     speakerId: string
   ): Promise<IConference[]> {
-    console.log(speakerId);
     const result = await ConferenceModel.find({ speakerId: speakerId }).exec();
     return result;
   }
 
   public async getAllActiveConferences(): Promise<IConference[]> {
     // TODO: Would be better if just get he conferences when quote > total asistants?
-    const result = await ConferenceModel.find({ state: 'ACTIVE' }).exec();
+    const result = await ConferenceModel.find({
+      state: conferenceState.ACTIVE,
+    }).exec();
     return result;
   }
 
