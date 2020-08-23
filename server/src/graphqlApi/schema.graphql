@@ -1,2 +1,3 @@
 scalar Date
 # import users from "./users/graphqlTypes/index.graphql"
+# import conferences from "./conferences/graphqlTypes/index.graphql"

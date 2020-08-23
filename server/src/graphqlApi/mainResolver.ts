@@ -2,6 +2,7 @@ import { GraphQLScalarType } from "graphql";
 import { Kind } from "graphql/language";
 
 import userResolver from "./users/resolvers";
+import conferenceResolver from "./conferences/resolvers";
 
 export const resolverMap = {
   Date: new GraphQLScalarType({
@@ -22,6 +23,6 @@ export const resolverMap = {
   }),
 };
 
-const resolvers = [userResolver];
+const resolvers = [userResolver, conferenceResolver];
 
 export default resolvers;

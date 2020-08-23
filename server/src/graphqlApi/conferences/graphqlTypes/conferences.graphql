@@ -1,0 +1,21 @@
+type Conference {
+  id: ID
+  title: String
+  date: Date
+  location: String
+  state: conferenceState
+  speakerId: String
+}
+
+input ConferenceInput {
+  title: String
+  date: Date
+  location: String
+  state: conferenceState
+  speakerId: String
+}
+
+enum conferenceState {
+  ACTIVE
+  INACTIVE
+}

@@ -1,0 +1,4 @@
+type Mutation {
+  createConference(input: ConferenceInput): Conference
+  updateConference(input: ConferenceInput): Conference
+}

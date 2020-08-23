@@ -1,0 +1,3 @@
+# import conference from "conferences.graphql"
+# import Mutation.* from "mutations.graphql"
+# import Query.* from "queries.graphql"

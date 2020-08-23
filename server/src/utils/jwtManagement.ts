@@ -6,7 +6,6 @@ import { IUser } from "../models/user";
 export const generateToken = (data: IUser): string => {
   const { id, name, email, role } = data;
   try {
-    console.log("user to token", data);
     const token = jwt.sign({ id, name, email, role }, SING_TOKEN, {
       expiresIn: TOKEN_EXPIRATION_TIME,
     });
@@ -19,6 +18,9 @@ export const generateToken = (data: IUser): string => {
 };
 
 export const getUserFromToken = (token: string): IUser => {
-  const userToken = jwt.verify(token, SING_TOKEN);
+  let userToken = {};
+  if (token) {
+    userToken = jwt.verify(token, SING_TOKEN);
+  }
   return userToken as IUser;
 };

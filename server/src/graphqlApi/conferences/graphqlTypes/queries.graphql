@@ -1,0 +1,6 @@
+type Query {
+  getAllConferencesBySpeakerId(speakerId: ID!): [Conference]
+  getAllConferencesByAttendantId(attendantId: ID!): [Conference]
+  getAllActiveConferences: [Conference]
+  getConferenceById(id: ID!): Conference
+}
