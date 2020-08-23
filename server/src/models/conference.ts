@@ -1,5 +1,5 @@
-import { model, Document, Schema } from "mongoose";
-import { IUser } from "./user";
+import { model, Document, Schema } from 'mongoose';
+import { IUser } from './user';
 
 export interface IConference extends Document {
   id: string;
@@ -7,8 +7,9 @@ export interface IConference extends Document {
   date: string;
   location: string;
   quota: number;
-  userId: IUser["_id"];
+  speakerId: IUser['_id'];
   state: string;
+  assistants: string[];
 }
 
 export interface IConferenceInput {
@@ -16,8 +17,19 @@ export interface IConferenceInput {
   date: string;
   location: string;
   quota: number;
-  userId: string;
+  speakerId: string;
   state: string;
+}
+
+export interface IAsistantInput {
+  conferenceId: string;
+  attendantId: string;
+}
+
+export interface IMutationResult {
+  ok: boolean;
+  conference?: IConference | null;
+  message?: string;
 }
 
 const coferenceSchema = new Schema({
@@ -36,16 +48,20 @@ const coferenceSchema = new Schema({
   state: {
     type: String,
   },
-  spieakerId: {
+  quota: {
+    type: Number,
+    required: true,
+  },
+  speakerId: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
   },
   assistants: [
     {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
     },
   ],
 });
 
-export default model<IConference>("Conference", coferenceSchema);
+export default model<IConference>('Conference', coferenceSchema);

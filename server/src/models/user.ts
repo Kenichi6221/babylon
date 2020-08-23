@@ -1,10 +1,10 @@
-import { Schema, model, Document } from "mongoose";
-import uniquevalidator from "mongoose-unique-validator";
-import bcrypt from "bcrypt";
+import { Schema, model, Document } from 'mongoose';
+import uniquevalidator from 'mongoose-unique-validator';
+import bcrypt from 'bcrypt';
 
 const allowedRoles = {
-  values: ["SPEAKER", "ATTENDANT"],
-  message: "is not a valid role",
+  values: ['SPEAKER', 'ATTENDANT'],
+  message: 'is not a valid role',
 };
 
 export interface IUser extends Document {
@@ -42,10 +42,10 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.plugin(uniquevalidator, { message: "must be uniqe" });
+userSchema.plugin(uniquevalidator, { message: 'must be uniqe' });
 
-userSchema.pre<IUser>("save", function (next) {
-  if (!this.isDirectModified("password")) {
+userSchema.pre<IUser>('save', function (next) {
+  if (!this.isDirectModified('password')) {
     return next();
   }
 
@@ -54,4 +54,4 @@ userSchema.pre<IUser>("save", function (next) {
   next();
 });
 
-export default model<IUser>("User", userSchema);
+export default model<IUser>('User', userSchema);

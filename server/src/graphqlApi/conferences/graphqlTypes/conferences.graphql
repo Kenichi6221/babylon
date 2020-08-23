@@ -5,6 +5,7 @@ type Conference {
   location: String
   state: conferenceState
   speakerId: String
+  quota: Int!
 }
 
 input ConferenceInput {
@@ -13,6 +14,18 @@ input ConferenceInput {
   location: String
   state: conferenceState
   speakerId: String
+  quota: Int!
+}
+
+input AsistantInput {
+  conferenceId: ID!
+  attendantId: ID!
+}
+
+type MutationResult {
+  ok: Boolean
+  conference: Conference
+  message: String
 }
 
 enum conferenceState {

@@ -1,5 +1,10 @@
-import { IConference, IConferenceInput } from "../../models/conference";
-import { ConferenceServices } from "./services";
+import {
+  IConference,
+  IConferenceInput,
+  IAsistantInput,
+  IMutationResult,
+} from '../../models/conference';
+import { ConferenceServices } from './services';
 const conferenceResolvers = {
   Query: {
     getConferenceById: async (
@@ -29,7 +34,6 @@ const conferenceResolvers = {
     },
   },
   Mutation: {
-    //TODO: add register asistant mutation (idAssistant, idConference)
     createConference: async (
       _,
       { input }: { input: IConferenceInput }
@@ -40,9 +44,16 @@ const conferenceResolvers = {
     updateConference: async (
       _,
       { id, input }: { id: string; input: IConferenceInput }
-    ): Promise<IConference | null> => {
+    ): Promise<IMutationResult> => {
       const service = new ConferenceServices();
       return await service.updateConference(id, input);
+    },
+    registerAttendant: async (
+      _,
+      { input }: { input: IAsistantInput }
+    ): Promise<IMutationResult> => {
+      const service = new ConferenceServices();
+      return await service.registerAttendant(input);
     },
   },
 };

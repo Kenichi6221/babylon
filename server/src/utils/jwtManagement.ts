@@ -1,7 +1,7 @@
-import jwt from "jsonwebtoken";
-import { SING_TOKEN } from "../configurations/configuration";
-import { TOKEN_EXPIRATION_TIME } from "../configurations/configuration";
-import { IUser } from "../models/user";
+import jwt from 'jsonwebtoken';
+import { SING_TOKEN } from '../configurations/configuration';
+import { TOKEN_EXPIRATION_TIME } from '../configurations/configuration';
+import { IUser } from '../models/user';
 
 export const generateToken = (data: IUser): string => {
   const { id, name, email, role } = data;
@@ -11,9 +11,9 @@ export const generateToken = (data: IUser): string => {
     });
     return token;
   } catch (error) {
-    console.log("error in token generation");
+    console.log('error in token generation');
     console.log(error);
-    return "";
+    return '';
   }
 };
 

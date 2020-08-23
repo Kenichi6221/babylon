@@ -1,5 +1,5 @@
-import { IUserInput, IUser } from "./src/models/user";
-import { UserServices } from "./services";
+import { IUserInput, IUser } from './src/models/user';
+import { UserServices } from './services';
 
 const userResolvers = {
   Query: {
@@ -16,7 +16,7 @@ const userResolvers = {
       parent: any,
       { input }: { input: IUserInput }
     ): Promise<IUser> => {
-      console.log("before", parent);
+      console.log('before', parent);
       const service = new UserServices();
       return await service.createUser(input);
     },

@@ -1,6 +1,6 @@
-import * as path from "path";
-import { importSchema } from "graphql-import";
+import * as path from 'path';
+import { importSchema } from 'graphql-import';
 
-const typeDefs = importSchema(path.resolve(__dirname, "./schema.graphql"));
+const typeDefs = importSchema(path.resolve(__dirname, './schema.graphql'));
 
 export default typeDefs;

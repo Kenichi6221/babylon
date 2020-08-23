@@ -1,5 +1,5 @@
-import { connect } from "mongoose";
-import { STRING_CONNECTION } from "../configurations/configuration";
+import { connect } from 'mongoose';
+import { STRING_CONNECTION } from '../configurations/configuration';
 
 const connectDB = async (): Promise<void> => {
   try {
@@ -10,7 +10,7 @@ const connectDB = async (): Promise<void> => {
       useFindAndModify: true,
     });
   } catch (error) {
-    console.log("we have an error");
+    console.log('we have an error');
     console.log(error);
     process.exit(1);
   }
