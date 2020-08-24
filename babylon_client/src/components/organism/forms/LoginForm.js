@@ -6,8 +6,13 @@ import fetchData, { buidPostFormData } from 'utils/Fetch';
 import { environment } from 'utils/enviroment';
 import { SectionActions } from 'components/atomic/Section/SectionActions';
 import SubmitButton from 'components/atomic/Button/SubmitButton';
+import { useDispatch } from 'react-redux';
+import { UserActions } from 'redux/actions';
+import { useRouter } from 'next/router';
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
   const { register, handleSubmit } = useForm({
     // defaultValues: defaultValues,
   });
@@ -16,7 +21,10 @@ const LoginForm = () => {
     const url = `${environment.api.url}/login`;
     const options = buidPostFormData({ data });
     const result = await fetchData(url, options);
-    console.log(result);
+    if (result.ok) {
+      dispatch(UserActions.userLoged(result));
+      router.push('/');
+    }
   };
 
   return (

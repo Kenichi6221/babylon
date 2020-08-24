@@ -1,5 +1,11 @@
-import Login from "./login";
+import React from 'react';
+import DefaultLayout from 'components/templates/DefaultLayout';
+import useSecureAuthentication from 'customHooks/useSecureAuthentication';
 
 export default function Home() {
-  return <Login />;
+  const { autheticationWasChecked } = useSecureAuthentication();
+  if (!autheticationWasChecked) {
+    return null;
+  }
+  return <DefaultLayout />;
 }
