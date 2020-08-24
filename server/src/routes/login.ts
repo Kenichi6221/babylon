@@ -16,7 +16,15 @@ app.post('/login', async (req, res) => {
   const correctPassword = bcrypt.compareSync(password, savedPass);
   if (correctPassword) {
     const token = generateToken(found as IUser);
-    return res.send({ ok: true, token });
+
+    const user = {
+      name: found?.name,
+      emai: found?.email,
+      id: found?.id,
+      role: found?.role,
+    };
+
+    return res.send({ ok: true, token, user });
   }
 
   return res.send({ ok: false, error: 'user not found' });
