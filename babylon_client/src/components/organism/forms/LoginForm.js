@@ -2,8 +2,10 @@ import React from 'react';
 import AtomicForm from 'components/atomic/Form';
 import { useForm } from 'react-hook-form';
 import InputTextField from 'components/molecule/Inputs/InputTextField';
-import fetchData, { buildPostOptions, buidPostFormData } from 'utils/Fetch';
+import fetchData, { buidPostFormData } from 'utils/Fetch';
 import { environment } from 'utils/enviroment';
+import { SectionActions } from 'components/atomic/Section/SectionActions';
+import SubmitButton from 'components/atomic/Button/SubmitButton';
 
 const LoginForm = () => {
   const { register, handleSubmit } = useForm({
@@ -33,7 +35,9 @@ const LoginForm = () => {
         register={register}
         // margin="1.5rem 1.5rem 0.5rem 1.5rem"
       />
-      <button type="submit">submit</button>
+      <SectionActions>
+        <SubmitButton type="submit">submit</SubmitButton>
+      </SectionActions>
     </AtomicForm>
   );
 };
