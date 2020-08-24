@@ -9,9 +9,11 @@ import { createServer } from 'http';
 import routes from './src/routes';
 import bodyParser from 'body-parser';
 import { getUserFromToken } from './src/utils/jwtManagement';
+import cors from 'cors';
 
 const app = express();
 
+app.use('*', cors({ origin: '*' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
