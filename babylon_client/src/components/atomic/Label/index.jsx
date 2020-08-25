@@ -10,10 +10,10 @@ const LabelAsPlaceHolder = styled.label`
   transition-timing-function: ease;
   transition-duration: 0.3s;
 
-  color: hsl(0, 0%, 50%);
+  color: #696969;
   pointer-events: none;
 
-  background-color: #fbfbfb;
+  background-color: #fff;
 `;
 
 export default LabelAsPlaceHolder;

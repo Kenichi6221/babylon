@@ -9,12 +9,20 @@ import SubmitButton from 'components/atomic/Button/SubmitButton';
 import { useDispatch } from 'react-redux';
 import { UserActions } from 'redux/actions';
 import { useRouter } from 'next/router';
+import { yupResolver } from '@hookform/resolvers';
+import * as yup from 'yup';
+
+const schema = yup.object().shape({
+  email: yup.string().required(),
+  password: yup.string().required(),
+});
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { register, handleSubmit } = useForm({
     // defaultValues: defaultValues,
+    resolver: yupResolver(schema),
   });
 
   const handleSubmitForm = async (data) => {

@@ -3,36 +3,32 @@ import FormTextField from 'components/atomic/Field/FormTextField';
 import LabelAsPlaceHolder from 'components/atomic/Label';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import FormSection from 'components/atomic/Section/FormSection';
+import ErrorField from 'components/atomic/Text/ErrorField';
 
-export const FormSection = styled.section`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: center;
-  margin: ${(props) => props.margin || '1.5rem'};
-  position: relative;
-  height: 3rem;
-
-  & ${FormTextField}:not(:placeholder-shown) + label {
-    transform: translate(0.5rem, -1.5rem);
-    font-size: 0.7rem;
+const InputFormSection = styled(FormSection)`
+  & ${FormTextField}:not(focus) + label {
+    transform: translate(0.5rem, 1rem);
   }
 
   & ${FormTextField}:focus + label {
-    transform: translate(0.5rem, -1.5rem);
-    font-size: 0.7rem;
+    transform: translate(0.5rem, -0.5rem);
+    font-size: 0.8rem;
   }
 `;
 
 const InputTextField = (props) => {
-  const { label, margin, register, ...input } = props;
+  const { label, margin, register, error, ...input } = props;
   const { name } = props;
 
   return (
-    <FormSection margin={margin}>
-      <FormTextField placeholder=" " {...input} ref={register} />
-      <LabelAsPlaceHolder htmlFor={name}>{label}</LabelAsPlaceHolder>
-    </FormSection>
+    <>
+      <InputFormSection margin={margin}>
+        <FormTextField {...input} ref={register} />
+        <LabelAsPlaceHolder htmlFor={name}>{label}</LabelAsPlaceHolder>
+        <ErrorField> {error?.message}</ErrorField>
+      </InputFormSection>
+    </>
   );
 };
 
@@ -41,6 +37,7 @@ InputTextField.propTypes = {
   label: PropTypes.string,
   margin: PropTypes.string,
   register: PropTypes.func,
+  error: PropTypes.object,
 };
 
 export default InputTextField;
