@@ -8,7 +8,7 @@ const LabelAsPlaceHolder = styled.label`
   text-transform: capitalize;
   transition-property: transform, font-size, color;
   transition-timing-function: ease;
-  transition-duration: 0.3s;
+  transition-duration: 0.5s;
 
   color: #696969;
   pointer-events: none;

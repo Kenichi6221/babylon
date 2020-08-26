@@ -4,7 +4,6 @@ import { Controller } from 'react-hook-form';
 import Select from 'components/atomic/Select';
 import PropTypes from 'prop-types';
 import FormSection from 'components/atomic/Section/FormSection';
-import styled from 'styled-components';
 
 const overrideStyles = {
   menuList: (styles) => ({

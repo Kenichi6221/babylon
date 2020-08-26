@@ -3,11 +3,16 @@ import FormTextField from 'components/atomic/Field/FormTextField';
 import LabelAsPlaceHolder from 'components/atomic/Label';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import FormSection from 'components/atomic/Section/FormSection';
 import ErrorField from 'components/atomic/Text/ErrorField';
+import FormSection from 'components/atomic/Section/FormSection';
 
 const InputFormSection = styled(FormSection)`
-  & ${FormTextField}:not(focus) + label {
+  & ${FormTextField}:not(:placeholder-shown) + label {
+    transform: translate(0.5rem, -0.5rem);
+    font-size: 0.8rem;
+  }
+
+  & ${FormTextField}:placeholder-shown + label {
     transform: translate(0.5rem, 1rem);
   }
 
@@ -24,7 +29,7 @@ const InputTextField = (props) => {
   return (
     <>
       <InputFormSection margin={margin}>
-        <FormTextField {...input} ref={register} />
+        <FormTextField placeholder=" " {...input} ref={register} />
         <LabelAsPlaceHolder htmlFor={name}>{label}</LabelAsPlaceHolder>
         <ErrorField> {error?.message}</ErrorField>
       </InputFormSection>

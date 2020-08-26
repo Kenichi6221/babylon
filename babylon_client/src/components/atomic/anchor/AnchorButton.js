@@ -1,16 +1,16 @@
 import styled from 'styled-components';
-import Button from './index';
 
-const SubmitButton = styled(Button)`
+const AnchorButton = styled.a`
   display: flex;
   padding: 0.5rem;
-
-  width: 80%;
+  width: 100%;
   height: 100%;
   min-width: 300px;
+
   box-sizing: border-box;
 
   color: #fff;
+  border-radius: 1rem;
   background-color: #185e8f;
   justify-content: center;
 
@@ -21,4 +21,4 @@ const SubmitButton = styled(Button)`
   }
 `;
 
-export default SubmitButton;
+export default AnchorButton;
