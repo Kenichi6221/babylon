@@ -5,7 +5,6 @@ const ContainerSection = styled.main`
   height: 100%;
   max-width: 900px;
   padding: 1rem;
-  max-width: 100%;
   box-sizing: border-box;
 
   margin-right: auto;

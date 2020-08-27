@@ -10,7 +10,7 @@ function createApolloClient() {
     connectToDevTools: true,
     ssrMode: typeof window === 'undefined',
     link: new HttpLink({
-      uri: environment.api.url, // Server URL (must be absolute)
+      uri: `${environment.api.url}/graphql`, // Server URL (must be absolute)
       credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
     }),
     cache: new InMemoryCache({

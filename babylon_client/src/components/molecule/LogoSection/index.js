@@ -5,7 +5,7 @@ import Figure from 'components/atomic/Figure';
 import Image from 'components/atomic/Image';
 
 const LogoSection = () => {
-  const image = <Image src="/images/logo.png" />;
+  const image = <Image src="/images/logo.png" alt="logo babylon app" />;
   return (
     <>
       <Section height="7rem">

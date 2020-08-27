@@ -8,7 +8,7 @@ const IntroduceAppSection = () => {
   return (
     <IntroductionSection>
       <Figure>
-        <Image src="/images/welcomeImage.png" />
+        <Image src="/images/welcomeImage.png" alt="babylon app welcome" />
         <FigureCaptionIntroduction>
           hello this app is amazing if you want to share your wise
         </FigureCaptionIntroduction>

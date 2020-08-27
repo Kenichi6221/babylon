@@ -38,6 +38,7 @@ const LoginForm = () => {
   return (
     <AtomicForm autoComplete="off" onSubmit={handleSubmit(handleSubmitForm)}>
       <InputTextField
+        id="email"
         name="email"
         label="email"
         type="email"
@@ -46,6 +47,7 @@ const LoginForm = () => {
         // margin="1.5rem 1.5rem 0.5rem 1.5rem"
       />
       <InputTextField
+        id="password"
         name="password"
         label="password"
         type="password"

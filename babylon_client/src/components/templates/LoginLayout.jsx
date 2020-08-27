@@ -1,14 +1,13 @@
 import React from 'react';
-import LogoSection from 'components/molecule/LogoSection';
-import TitleSection from 'components/molecule/TitleSection';
 import PropTypes from 'prop-types';
+import Header from 'components/molecule/Header';
+import ContainerSection from 'components/atomic/Section/ContainerSection';
 
 const LoginLayout = ({ children, title }) => {
   return (
     <>
-      <LogoSection />
-      <TitleSection title={title} />
-      {children}
+      <Header title={title} />
+      <ContainerSection>{children}</ContainerSection>
     </>
   );
 };

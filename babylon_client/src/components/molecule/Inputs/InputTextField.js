@@ -24,13 +24,12 @@ const InputFormSection = styled(FormSection)`
 
 const InputTextField = (props) => {
   const { label, margin, register, error, ...input } = props;
-  const { name } = props;
-
+  const { id } = props;
   return (
     <>
       <InputFormSection margin={margin}>
         <FormTextField placeholder=" " {...input} ref={register} />
-        <LabelAsPlaceHolder htmlFor={name}>{label}</LabelAsPlaceHolder>
+        <LabelAsPlaceHolder htmlFor={id}>{label}</LabelAsPlaceHolder>
         <ErrorField> {error?.message}</ErrorField>
       </InputFormSection>
     </>
@@ -38,7 +37,8 @@ const InputTextField = (props) => {
 };
 
 InputTextField.propTypes = {
-  name: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   label: PropTypes.string,
   margin: PropTypes.string,
   register: PropTypes.func,

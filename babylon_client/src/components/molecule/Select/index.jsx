@@ -21,25 +21,26 @@ const overrideStyles = {
 };
 
 const SelectInput = (props) => {
-  const { name, label, margin, placeHolder, ...properties } = props;
+  const { label, margin, placeHolder, ...properties } = props;
+  const { id } = props;
   return (
     <FormSection margin={margin}>
       <Controller
         instanceId
-        name={name}
         as={Select}
         isClearable
         placeholder={`${placeHolder}`}
         styles={overrideStyles}
         {...properties}
       />
-      <LabelInput htmlFor={name}>{label}</LabelInput>
+      <LabelInput htmlFor={id}>{label}</LabelInput>
     </FormSection>
   );
 };
 
 SelectInput.propTypes = {
-  name: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   label: PropTypes.string,
   placeHolder: PropTypes.string,
   margin: PropTypes.string,
