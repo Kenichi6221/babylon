@@ -1,4 +1,4 @@
-import { IUserInput, IUser } from './src/models/user';
+import { IUserInput, IUser, IToken } from './src/models/user';
 import { UserServices } from './services';
 
 const userResolvers = {
@@ -18,6 +18,13 @@ const userResolvers = {
     ): Promise<IUser> => {
       const service = new UserServices();
       return await service.createUser(input);
+    },
+    userLogin: async (
+      parent: any,
+      { email, password }: { email: string; password: string }
+    ): Promise<IToken> => {
+      const service = new UserServices();
+      return await service.userLogin(email, password);
     },
   },
 };

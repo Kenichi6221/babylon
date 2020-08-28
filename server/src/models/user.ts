@@ -15,6 +15,15 @@ export interface IUser extends Document {
   role: string;
 }
 
+export interface IToken {
+  role: string;
+  name: string;
+  email: string;
+  token: string;
+  userId: string;
+  password: string;
+}
+
 export interface IUserInput {
   name: string;
   email: string;

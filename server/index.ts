@@ -6,7 +6,6 @@ import resolvers from './src/graphqlApi/mainResolver';
 import connectDB from './src/models/connectDB';
 import { PORT } from './src/configurations/configuration';
 import { createServer } from 'http';
-import routes from './src/routes';
 import bodyParser from 'body-parser';
 import { getUserFromToken } from './src/utils/jwtManagement';
 import cors from 'cors';
@@ -17,13 +16,12 @@ app.use('*', cors({ origin: '*' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(routes);
-
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ req }) => {
     const token = req.headers.authorization || '';
+    console.log('the token is', token);
     const user = getUserFromToken(token);
     // if (!user) throw new AuthenticationError("you must be logged in");
 

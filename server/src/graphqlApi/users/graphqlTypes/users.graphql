@@ -13,6 +13,14 @@ input UserInput {
   role: UserRole!
 }
 
+type Token {
+  userId: ID
+  name: String
+  token: String
+  email: String
+  role: UserRole
+}
+
 enum UserRole {
   SPEAKER
   ATTENDANT
