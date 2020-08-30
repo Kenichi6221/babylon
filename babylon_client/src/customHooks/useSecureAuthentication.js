@@ -1,31 +1,66 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import userSelector from 'redux/selectors';
+import { gql, useLazyQuery } from '@apollo/client';
+import { UserActions } from 'redux/actions';
+
+const GET_USER_FROM_QUERY = gql`
+  query getUserFromToken($token: String!) {
+    user: getUserFromToken(token: $token) {
+      id
+      name
+      email
+      role
+    }
+  }
+`;
 
 const useSecureAuthentication = () => {
-  const [autheticationWasChecked, setAutheticationWasChecked] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  let token =
+    typeof window !== 'undefined' ? localStorage.getItem('token') : '';
 
   const router = useRouter();
-  const authenticate = useSelector((state) =>
-    userSelector.getIsAuthenticated(state)
+  const dispatch = useDispatch();
+
+  const [autheticationWasChecked, setAutheticationWasChecked] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [errors, setErrors] = useState(null);
+
+  const isUserInRedux = useSelector((state) =>
+    userSelector.getIsUserInRedux(state)
   );
+  const [getUserFromToken, { data }] = useLazyQuery(GET_USER_FROM_QUERY, {
+    variables: { token },
+  });
 
   useEffect(() => {
+    console.log('from secure authentication user in redux', isUserInRedux);
     const checkRedirect = async () => {
-      setAutheticationWasChecked(true);
-      setIsAuthenticated(authenticate);
-      if (!authenticate) {
-        await router.push('/login');
+      try {
+        const needUserRestore = !isUserInRedux && !!token;
+        setIsAuthenticated(!!token);
+        setAutheticationWasChecked(true);
+        if (!token) {
+          router.push('/login');
+        }
+        if (needUserRestore) {
+          getUserFromToken();
+          if (data) {
+            dispatch(UserActions.userLoged({ token, user: data.user }));
+          }
+        }
+      } catch (exception) {
+        setErrors(exception);
       }
     };
     checkRedirect();
-  });
+  }, [isUserInRedux, token, router, data, dispatch, getUserFromToken]);
 
   return {
     autheticationWasChecked,
     isAuthenticated,
+    errors,
   };
 };
 

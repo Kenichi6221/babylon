@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 import { addPayloadToState } from 'redux/utils/reducers';
 const defaultState = {
-  isAuthenticated: false,
+  isUserInRedux: false,
   user: {
     id: '',
     name: '',
