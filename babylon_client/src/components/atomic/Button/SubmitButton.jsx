@@ -7,7 +7,8 @@ const SubmitButton = styled(Button)`
 
   width: 80%;
   height: 100%;
-  min-width: 300px;
+  min-width: 250px;
+  max-width: 400px;
   box-sizing: border-box;
 
   color: #fff;
