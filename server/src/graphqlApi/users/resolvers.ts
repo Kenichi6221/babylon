@@ -1,6 +1,5 @@
-import { IUserInput, IUser, IToken } from './src/models/user';
+import { IUserInput, IUser, IToken } from 'src/models/user';
 import { UserServices } from './services';
-import { IUser } from 'src/models/user';
 
 const userResolvers = {
   Query: {
