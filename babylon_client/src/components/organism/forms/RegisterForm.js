@@ -2,7 +2,7 @@ import React from 'react';
 import AtomicForm from 'components/atomic/Form';
 import { useForm } from 'react-hook-form';
 import InputTextField from 'components/molecule/Inputs/InputTextField';
-import { SectionActions } from 'components/atomic/Section/SectionActions';
+import SectionActions from 'components/atomic/Section/SectionActions';
 import SubmitButton from 'components/atomic/Button/SubmitButton';
 import SelectInput from 'components/molecule/Select';
 import { yupResolver } from '@hookform/resolvers';

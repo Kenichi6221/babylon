@@ -2,15 +2,12 @@ import React from 'react';
 import AtomicForm from 'components/atomic/Form';
 import { useForm } from 'react-hook-form';
 import InputTextField from 'components/molecule/Inputs/InputTextField';
-import fetchData, { buidPostFormData } from 'utils/Fetch';
-import { environment } from 'utils/enviroment';
-import { SectionActions } from 'components/atomic/Section/SectionActions';
+import SectionActions from 'components/atomic/Section/SectionActions';
 import SubmitButton from 'components/atomic/Button/SubmitButton';
-import { useDispatch } from 'react-redux';
-import { UserActions } from 'redux/actions';
-import { useRouter } from 'next/router';
 import { yupResolver } from '@hookform/resolvers';
 import * as yup from 'yup';
+
+import useLogin from 'customHooks/useLogin';
 
 const schema = yup.object().shape({
   email: yup.string().required(),
@@ -18,25 +15,18 @@ const schema = yup.object().shape({
 });
 
 const LoginForm = () => {
-  const dispatch = useDispatch();
-  const router = useRouter();
+  const { handleLoginSubmit, loginErrors } = useLogin();
+
   const { register, handleSubmit } = useForm({
-    // defaultValues: defaultValues,
     resolver: yupResolver(schema),
   });
 
-  const handleSubmitForm = async (data) => {
-    const url = `${environment.api.url}/login`;
-    const options = buidPostFormData({ data });
-    const result = await fetchData(url, options);
-    if (result.ok) {
-      dispatch(UserActions.userLoged(result));
-      router.push('/');
-    }
-  };
+  if (loginErrors) {
+    console.log('from login errors are ', loginErrors);
+  }
 
   return (
-    <AtomicForm autoComplete="off" onSubmit={handleSubmit(handleSubmitForm)}>
+    <AtomicForm autoComplete="off" onSubmit={handleSubmit(handleLoginSubmit)}>
       <InputTextField
         id="email"
         name="email"
@@ -44,7 +34,6 @@ const LoginForm = () => {
         type="email"
         register={register}
         autoComplete="username"
-        // margin="1.5rem 1.5rem 0.5rem 1.5rem"
       />
       <InputTextField
         id="password"
@@ -53,7 +42,6 @@ const LoginForm = () => {
         type="password"
         register={register}
         autoComplete="current-password"
-        // margin="1.5rem 1.5rem 0.5rem 1.5rem"
       />
       <SectionActions>
         <SubmitButton type="submit">submit</SubmitButton>

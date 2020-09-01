@@ -1,28 +1,34 @@
 import { useMemo } from 'react';
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
-import { concatPagination } from '@apollo/client/utilities';
+import { setContext } from '@apollo/client/link/context';
+// import { concatPagination } from '@apollo/client/utilities';
 import { environment } from 'utils/enviroment';
-
 let apolloClient;
 
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('token') || '';
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: `${token}`,
+    },
+  };
+});
+
 function createApolloClient() {
+  let httpLink = authLink.concat(
+    new HttpLink({
+      uri: `${environment.api.url}/graphql`, // Server URL (must be absolute)
+      credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
+    })
+  );
+
   return new ApolloClient({
     connectToDevTools: true,
     ssrMode: typeof window === 'undefined',
-    link: new HttpLink({
-      uri: `${environment.api.url}/graphql`, // Server URL (must be absolute)
-      credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
-    }),
-    cache: new InMemoryCache({
-      typePolicies: {
-        Query: {
-          fields: {
-            conferences: concatPagination(),
-            asistants: concatPagination(),
-          },
-        },
-      },
-    }),
+    link: httpLink,
+    cache: new InMemoryCache(),
   });
 }
 

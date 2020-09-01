@@ -19,7 +19,7 @@ const useLogin = () => {
   const dispatch = useDispatch();
   const client = useApolloClient();
   const router = useRouter();
-  const [loginErrors, setLoginErrors] = useState([]);
+  const [loginErrors, setLoginErrors] = useState(null);
   const [response, setResponse] = useState({ token: '' });
   const [login] = useMutation(LOGIN_USER);
   return {
@@ -31,13 +31,14 @@ const useLogin = () => {
         const { data } = await login({
           variables: { email, password },
         });
+
         const { token, ...user } = data.token;
+
         setResponse(data.token);
         client.resetStore();
+        localStorage.setItem('token', token);
 
-        // client.writeQuery();
-
-        dispatch(UserActions.userLoged({ user, token }));
+        dispatch(UserActions.userLoged({ user }));
         router.push('/home');
       } catch (exception) {
         if (exception.errors) {
