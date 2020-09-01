@@ -21,7 +21,6 @@ const server = new ApolloServer({
   resolvers,
   context: ({ req }) => {
     const token = req.headers.authorization || '';
-    console.log('the token is', token);
     const user = getUserFromToken(token);
     // if (!user) throw new AuthenticationError("you must be logged in");
 

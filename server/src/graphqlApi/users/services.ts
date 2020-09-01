@@ -1,10 +1,12 @@
 import UserModel, { IUserInput, IUser, IToken } from '../../models/user';
-import { generateToken } from '../../utils/jwtManagement';
+import { generateToken, getUserFromToken } from '../../utils/jwtManagement';
 import bcrypt from 'bcrypt';
 
 export class UserServices {
+  public async getUserFromToken(token: string): Promise<IUser> {
+    return getUserFromToken(token);
+  }
   public async userLogin(email: string, password: string): Promise<IToken> {
-    console.log('from user service', email, password);
     const found = await UserModel.findOne({ email }).exec();
 
     if (!found) {
@@ -26,7 +28,6 @@ export class UserServices {
       role: found.role,
     };
 
-    console.log(user);
     return user as IToken;
   }
   public async getUserById(id: string): Promise<IUser | null> {

@@ -1,3 +1,4 @@
 type Query {
   getUserById(id: ID): User
+  getUserFromToken(token: String!): User
 }
