@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const FormSection = styled.section`
   flex: 1 0;
   min-width: 300px;
-  max-width: 400px;
 
   display: flex;
   flex-wrap: wrap;
