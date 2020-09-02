@@ -17,6 +17,7 @@ const ContainerSection = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 5rem 2rem 1fr 5rem;
+  justify-content: center;
   grid-template-areas:
     'headerApp'
     'titleSection'
