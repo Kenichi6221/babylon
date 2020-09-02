@@ -2,6 +2,8 @@ type User {
   id: ID
   name: String
   email: String
+  website: String
+  bio: String
   password: String
   role: UserRole
 }
@@ -9,6 +11,8 @@ type User {
 input UserInput {
   name: String
   email: String!
+  website: String
+  bio: String
   password: String!
   role: UserRole!
 }

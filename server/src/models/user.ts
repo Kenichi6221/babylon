@@ -11,6 +11,8 @@ export interface IUser extends Document {
   id: string;
   name: string;
   email: string;
+  website: string;
+  bio: string;
   password: string;
   role: string;
 }
@@ -27,12 +29,22 @@ export interface IToken {
 export interface IUserInput {
   name: string;
   email: string;
+  website: string;
+  bio: string;
   password: string;
   role: string;
 }
 
 const userSchema = new Schema({
   name: {
+    type: String,
+    required: true,
+  },
+  website: {
+    type: String,
+    required: true,
+  },
+  bio: {
     type: String,
     required: true,
   },
