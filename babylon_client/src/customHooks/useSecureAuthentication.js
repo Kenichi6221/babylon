@@ -38,7 +38,6 @@ const useSecureAuthentication = () => {
   );
 
   useEffect(() => {
-    console.log('from check isUserInRedux');
     const needUserRestore = !isUserInRedux && !!token;
     if (needUserRestore) {
       getUserFromToken();
@@ -46,14 +45,12 @@ const useSecureAuthentication = () => {
   }, [token, isUserInRedux, getUserFromToken]);
 
   useEffect(() => {
-    console.log('from check data');
     if (data) {
       dispatch(UserActions.userLoged({ user: data.user }));
     }
   }, [data, dispatch]);
 
   useEffect(() => {
-    console.log('from check error');
     const errorAction = async () => {
       if (error) {
         localStorage.removeItem('token');
@@ -66,7 +63,6 @@ const useSecureAuthentication = () => {
   }, [error, router]);
 
   useEffect(() => {
-    console.log('from check token');
     const checkRedirect = async () => {
       setIsAuthenticated(!!token);
       setAutheticationWasChecked(true);
