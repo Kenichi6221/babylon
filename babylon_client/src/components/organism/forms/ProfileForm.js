@@ -8,47 +8,49 @@ import { useForm } from 'react-hook-form';
 import SectionActions from 'components/atomic/Section/SectionActions';
 import SubmitButton from 'components/atomic/Button/SubmitButton';
 import InputTextAarea from 'components/molecule/TextArea/InputTextAarea';
-// import { useSelector } from 'react-redux';
-
-import { gql, useQuery } from '@apollo/client';
-// import userSelector from 'redux/selectors';
-
-const GET_USER_PROFILE = gql`
-  query getUserById($id: ID!) {
-    user: getUserById(id: $id) {
-      id
-      name
-      email
-      bio
-      website
-    }
-  }
-`;
+import { useMutation, gql } from '@apollo/client';
+import { UserActions } from 'redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import userSelector from 'redux/selectors';
 
 const schema = yup.object().shape({
   name: yup.string().required(),
   email: yup.string().required(),
 });
 
+const UPDATE_PROFILE = gql`
+  mutation updateUser($id: ID!, $input: UserInput!) {
+    user: updateUser(id: $id, input: $input) {
+      id
+      name
+      email
+      role
+      website
+      bio
+    }
+  }
+`;
+
 const ProfileForm = () => {
-  // const user = useSelector((state) => userSelector.getUser(state));
+  const dispatch = useDispatch();
+  const { id, ...defautlUser } = useSelector((state) =>
+    userSelector.getUser(state)
+  );
 
-  // const { data, loading } = useQuery(GET_USER_PROFILE, {
-  //   variables: { id: user.userId },
-  // });
-
+  const [updateUserProfile] = useMutation(UPDATE_PROFILE);
   const { register, handleSubmit, errors } = useForm({
-    // defaultValues: data ?? null,
+    defaultValues: defautlUser,
     resolver: yupResolver(schema),
   });
 
-  const handleSubmitForm = (submitInfo) => {
-    console.log(submitInfo);
+  const handleSubmitForm = async (input) => {
+    const {
+      data: { user },
+    } = await updateUserProfile({
+      variables: { id, input },
+    });
+    dispatch(UserActions.userLoged({ user }));
   };
-
-  if (loading) {
-    return 'loading...';
-  }
 
   return (
     <AtomicForm autoComplete="off" onSubmit={handleSubmit(handleSubmitForm)}>

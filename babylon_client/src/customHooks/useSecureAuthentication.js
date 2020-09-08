@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useSelector, useDispatch } from 'react-redux';
-import userSelector from 'redux/selectors';
+import { useDispatch } from 'react-redux';
 import { gql, useLazyQuery } from '@apollo/client';
 import { UserActions } from 'redux/actions';
 
@@ -12,22 +11,33 @@ const GET_USER_FROM_QUERY = gql`
       name
       email
       role
+      website
+      bio
     }
   }
 `;
+
+const defaultState = {
+  loading: false,
+  success: false,
+  user: null,
+  error: false,
+};
+
+const authValidationStates = {
+  loading: { ...defaultState, loading: true },
+  success: { ...defaultState, success: true },
+  error: { ...defaultState, error: true },
+};
 
 const useSecureAuthentication = () => {
   let token =
     typeof window !== 'undefined' ? localStorage.getItem('token') || '' : '';
 
-  const router = useRouter();
   const dispatch = useDispatch();
-
-  const [autheticationWasChecked, setAutheticationWasChecked] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  const isUserInRedux = useSelector((state) =>
-    userSelector.getIsUserInRedux(state)
+  const route = useRouter();
+  const [authValidationState, setAuthValidationState] = useState(
+    authValidationStates.loading
   );
 
   const [getUserFromToken, { data, error }] = useLazyQuery(
@@ -38,46 +48,43 @@ const useSecureAuthentication = () => {
   );
 
   useEffect(() => {
-    const needUserRestore = !isUserInRedux && !!token;
-    if (needUserRestore) {
-      getUserFromToken();
+    if (!token) {
+      setAuthValidationState({
+        ...authValidationStates.error,
+        constent: 'empty token',
+      });
+      return;
     }
-  }, [token, isUserInRedux, getUserFromToken]);
+    getUserFromToken();
+  }, [getUserFromToken, token]);
 
   useEffect(() => {
     if (data) {
       dispatch(UserActions.userLoged({ user: data.user }));
+      setAuthValidationState({
+        ...authValidationStates.success,
+        user: data.user,
+      });
     }
-  }, [data, dispatch]);
+  }, [dispatch, data]);
 
   useEffect(() => {
-    const errorAction = async () => {
-      if (error) {
-        localStorage.removeItem('token');
-        setIsAuthenticated(false);
-        setAutheticationWasChecked(true);
-        await router.push('/login');
-      }
-    };
-    errorAction();
-  }, [error, router]);
+    if (error) {
+      localStorage.removeItem('token');
+      setAuthValidationState({
+        ...authValidationStates.error,
+        constent: error,
+      });
+    }
+  }, [error]);
 
   useEffect(() => {
-    const checkRedirect = async () => {
-      setIsAuthenticated(!!token);
-      setAutheticationWasChecked(true);
-      if (!token) {
-        await router.push('/login');
-      }
-    };
-    checkRedirect();
-  }, [token, router]);
+    if (authValidationState.error) {
+      route.push('/login');
+    }
+  }, [route, authValidationState.error]);
 
-  return {
-    autheticationWasChecked,
-    isAuthenticated,
-    error,
-  };
+  return authValidationState;
 };
 
 export default useSecureAuthentication;

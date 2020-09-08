@@ -2,7 +2,7 @@ import React from 'react';
 import DefaultLayout from 'components/templates/DefaultLayout';
 import ProfileForm from 'components/organism/forms/ProfileForm';
 
-const profile = () => {
+const Profile = () => {
   return (
     <DefaultLayout title="Profile">
       <ProfileForm />
@@ -10,4 +10,4 @@ const profile = () => {
   );
 };
 
-export default profile;
+export default Profile;

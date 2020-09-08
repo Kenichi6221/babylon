@@ -14,18 +14,12 @@ import {
 } from 'components/molecule/Icons';
 
 const DefaultLayout = ({ children, title }) => {
-  const {
-    autheticationWasChecked,
-    isAuthenticated,
-    error,
-  } = useSecureAuthentication();
-
-  if (!autheticationWasChecked || error) {
-    return null;
+  const { loading, user } = useSecureAuthentication();
+  if (loading) {
+    return 'loading...';
   }
   return (
-    isAuthenticated &&
-     (
+    user && (
       <ContainerSection>
         <Header title={title} />
         <TitleSection title={title} />

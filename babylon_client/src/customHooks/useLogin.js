@@ -7,11 +7,13 @@ import { UserActions } from 'redux/actions';
 const LOGIN_USER = gql`
   mutation userLogin($email: String!, $password: String!) {
     token: userLogin(email: $email, password: $password) {
-      userId
+      id
       name
       email
       role
       token
+      bio
+      website
     }
   }
 `;
@@ -28,6 +30,7 @@ const useLogin = () => {
     handleLoginSubmit: async (loginInfo) => {
       const { email, password } = loginInfo;
       try {
+        localStorage.removeItem('token');
         const { data } = await login({
           variables: { email, password },
         });
