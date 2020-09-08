@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const ContainerMainSection = styled.main`
-  width: 100%;
+  width: calc(100% - 2rem);
   max-width: 900px;
   padding: 1rem;
   box-sizing: border-box;

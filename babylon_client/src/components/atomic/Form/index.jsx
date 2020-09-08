@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const Form = styled.form`
+  width: calc(100% - 2rem);
   max-width: 850px;
 
   display: flex;
@@ -9,7 +10,7 @@ const Form = styled.form`
   box-sizing: border-box;
 
   justify-content: center;
-  margin: ${(props) => props.margin || '0 1.5rem'};
+  margin: ${(props) => props.margin || '0'};
 `;
 
 export default Form;
