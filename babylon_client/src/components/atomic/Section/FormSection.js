@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const FormSection = styled.section`
   flex: 1 0;
-  min-width: 300px;
+  min-width: 250px;
 
   display: flex;
   flex-wrap: wrap;

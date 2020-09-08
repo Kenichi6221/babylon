@@ -5,7 +5,7 @@ const AnchorButton = styled.a`
   padding: 0.5rem;
   width: 100%;
   height: 100%;
-  min-width: 300px;
+  min-width: 250px;
 
   box-sizing: border-box;
 
