@@ -26,6 +26,13 @@ const userResolvers = {
       const service = new UserServices();
       return await service.createUser(input);
     },
+    updateUser: async (
+      parent: any,
+      { id, input }: { id: string; input: IUserInput }
+    ): Promise<IUser | null> => {
+      const service = new UserServices();
+      return await service.updateUser(id, input);
+    },
     userLogin: async (
       parent: any,
       { email, password }: { email: string; password: string }

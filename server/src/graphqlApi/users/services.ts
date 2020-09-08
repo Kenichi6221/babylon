@@ -3,6 +3,20 @@ import { generateToken, getUserFromToken } from '../../utils/jwtManagement';
 import bcrypt from 'bcrypt';
 
 export class UserServices {
+  public async updateUser(
+    id: string,
+    input: IUserInput
+  ): Promise<IUser | null> {
+    if (id.length === 0) {
+      return this.createUser(input);
+    }
+
+    const updatedUser = await UserModel.findByIdAndUpdate(id, input, {
+      new: true,
+    }).exec();
+
+    return updatedUser;
+  }
   public async getUserFromToken(token: string): Promise<IUser> {
     return getUserFromToken(token);
   }
@@ -21,11 +35,13 @@ export class UserServices {
     const token = generateToken(found);
 
     const user = {
-      userId: found.id,
-      name: found.name,
       token,
+      id: found.id,
+      name: found.name,
       email: found.email,
       role: found.role,
+      website: found.website,
+      bio: found.bio,
     };
 
     return user as IToken;

@@ -4,11 +4,15 @@ import { TOKEN_EXPIRATION_TIME } from '../configurations/configuration';
 import { IUser } from '../models/user';
 
 export const generateToken = (data: IUser): string => {
-  const { id, name, email, role } = data;
+  const { id, name, email, role, bio, website } = data;
   try {
-    const token = jwt.sign({ id, name, email, role }, SING_TOKEN, {
-      expiresIn: TOKEN_EXPIRATION_TIME,
-    });
+    const token = jwt.sign(
+      { id, name, email, role, bio, website },
+      SING_TOKEN,
+      {
+        expiresIn: TOKEN_EXPIRATION_TIME,
+      }
+    );
     return token;
   } catch (error) {
     console.log('error in token generation');

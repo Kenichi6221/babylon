@@ -13,16 +13,18 @@ input UserInput {
   email: String!
   website: String
   bio: String
-  password: String!
-  role: UserRole!
+  password: String
+  role: UserRole
 }
 
 type Token {
-  userId: ID
+  id: ID
   name: String
   token: String
   email: String
   role: UserRole
+  website: String
+  bio: String
 }
 
 enum UserRole {

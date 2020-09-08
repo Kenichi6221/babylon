@@ -21,8 +21,10 @@ export interface IToken {
   role: string;
   name: string;
   email: string;
+  website: string;
+  bio: string;
   token: string;
-  userId: string;
+  id: string;
   password: string;
 }
 
@@ -42,11 +44,9 @@ const userSchema = new Schema({
   },
   website: {
     type: String,
-    required: true,
   },
   bio: {
     type: String,
-    required: true,
   },
   email: {
     type: String,
@@ -55,7 +55,7 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: true,
+    // required: true,
   },
   role: {
     type: String,
