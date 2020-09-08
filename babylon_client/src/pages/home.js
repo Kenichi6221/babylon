@@ -1,5 +1,6 @@
 import React from 'react';
 import DefaultLayout from 'components/templates/DefaultLayout';
+import Link from 'next/link';
 
 const Home = () => {
   return (
@@ -14,6 +15,10 @@ const Home = () => {
           explicabo corporis quasi ut nulla exercitationem dolore distinctio? Ut
           quidem officia fugit qui. Cumque, eius aperiam?
         </p>
+
+        <Link href="/profile">
+          <a>profile</a>
+        </Link>
       </div>
     </DefaultLayout>
   );
